@@ -1,33 +1,29 @@
 package com.alice.cursomc.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
-public class Categoria implements Serializable {
+public class Estado implements Serializable {
     @Serial
     private static final long serialVersionUID=1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String nome;
-    @ManyToMany(mappedBy = "categorias")
-    @JsonManagedReference
-    private List<Produto> produtos= new ArrayList<>();
+    private String Nome;
+    @OneToMany(mappedBy = "estado")
+    private List<Cidade> cidades =new ArrayList<>();
 
-    public Categoria(){
-
+    public Estado() {
     }
-    public Categoria(Integer id, String nome) {
+
+    public Estado(Integer id, String nome) {
         this.id = id;
-        this.nome = nome;
+        Nome = nome;
     }
 
     public Integer getId() {
@@ -39,27 +35,27 @@ public class Categoria implements Serializable {
     }
 
     public String getNome() {
-        return nome;
+        return Nome;
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        Nome = nome;
     }
 
-    public List<Produto> getProdutos() {
-        return produtos;
+    public List<Cidade> getCidades() {
+        return cidades;
     }
 
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
+    public void setCidades(List<Cidade> cidades) {
+        this.cidades = cidades;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Categoria categoria)) return false;
+        if (!(o instanceof Estado estado)) return false;
 
-        return getId().equals(categoria.getId());
+        return getId().equals(estado.getId());
     }
 
     @Override
