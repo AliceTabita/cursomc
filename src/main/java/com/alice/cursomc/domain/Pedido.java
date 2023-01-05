@@ -5,9 +5,7 @@ import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class Pedido implements Serializable {
@@ -26,21 +24,14 @@ public class Pedido implements Serializable {
     @ManyToOne
     @JoinColumn(name = "endereco_entrega_id")
     private Endereco enderecoDeEntrega;
-
-//    @ManyToMany(mappedBy = "pedidos")
-//    @JsonManagedReference
-//    @JoinTable(name = "PEDIDO_PRODUTO",
-//            joinColumns = @JoinColumn(name = "pedido_id"),
-//            inverseJoinColumns = @JoinColumn(name = "produto_id"))
-//    private List<Produto> itens= new ArrayList<>();
-
+    @OneToMany(mappedBy = "id.pedido")
+    private Set<ItemPedido> itens =new HashSet<>();
     public Pedido() {
     }
 
-    public Pedido(Integer id, Date instante, Pagamento pagamento, Cliente cliente, Endereco enderecoDeEntrega) {
+    public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
         this.id = id;
         this.instante = instante;
-        this.pagamento = pagamento;
         this.cliente = cliente;
         this.enderecoDeEntrega = enderecoDeEntrega;
     }
@@ -83,6 +74,14 @@ public class Pedido implements Serializable {
 
     public void setEnderecoDeEntrega(Endereco enderecoDeEntrega) {
         this.enderecoDeEntrega = enderecoDeEntrega;
+    }
+
+    public Set<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(Set<ItemPedido> itens) {
+        this.itens = itens;
     }
 
     @Override
