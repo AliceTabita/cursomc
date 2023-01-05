@@ -1,5 +1,6 @@
 package com.alice.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.io.Serial;
@@ -15,6 +16,7 @@ public class Cidade implements Serializable {
     private String name;
     @ManyToOne
     @JoinColumn(name="estado_id")
+    @JsonManagedReference
     private Estado estado;
 
     public Cidade() {

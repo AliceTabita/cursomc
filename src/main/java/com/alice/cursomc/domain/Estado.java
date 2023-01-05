@@ -1,5 +1,6 @@
 package com.alice.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.io.Serial;
@@ -16,6 +17,7 @@ public class Estado implements Serializable {
     private Integer id;
     private String Nome;
     @OneToMany(mappedBy = "estado")
+    @JsonBackReference
     private List<Cidade> cidades =new ArrayList<>();
 
     public Estado() {
