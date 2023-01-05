@@ -1,6 +1,7 @@
 package com.alice.cursomc.domain;
 
 import com.alice.cursomc.domain.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.io.Serial;
@@ -17,6 +18,7 @@ public abstract class Pagamento implements Serializable {
     @OneToOne
     @JoinColumn(name="pedido_id")
     @MapsId
+    @JsonBackReference
     private Pedido pedido;
 
     public Pagamento() {
