@@ -4,6 +4,7 @@ import com.alice.cursomc.domain.Categoria;
 import com.alice.cursomc.dto.CategoriaDTO;
 import com.alice.cursomc.services.CategoriaService;
 import com.alice.cursomc.services.exception.DataIntegrityException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -32,15 +33,17 @@ public class CategoriaResource {
         return ResponseEntity.ok().body(categoria);
     }
     @PostMapping
-    public ResponseEntity<Categoria> insert(@RequestBody Categoria categoria){
-        categoria = categoriaService.cadastrar(categoria);
+    public ResponseEntity<Categoria> insert(@RequestBody @Valid CategoriaDTO categoriaDTO){
+        Categoria categoria=categoriaService.fromDTO(categoriaDTO);
+        categoriaService.cadastrar(categoria);
         URI uri= ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@RequestBody Categoria categoria,@PathVariable Integer id){
-        categoria.setId(id);
-        categoria=categoriaService.atualizar(categoria);
+    public ResponseEntity<Void> update(@RequestBody @Valid CategoriaDTO categoriaDTO,@PathVariable Integer id){
+        categoriaDTO.setId(id);
+        Categoria categoria= categoriaService.fromDTO(categoriaDTO);
+        categoriaService.atualizar(categoria);
         return ResponseEntity.noContent().build();
     }
     @DeleteMapping("/{id}")
