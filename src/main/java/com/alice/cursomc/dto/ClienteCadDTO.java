@@ -1,12 +1,13 @@
 package com.alice.cursomc.dto;
 
+import com.alice.cursomc.services.validation.ClienteInsert;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serial;
 import java.io.Serializable;
-
+@ClienteInsert
 public class ClienteCadDTO implements Serializable {
     @Serial
     private static final long serialVersionUID=1L;
