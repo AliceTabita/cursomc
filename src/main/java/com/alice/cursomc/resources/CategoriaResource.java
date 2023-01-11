@@ -29,7 +29,7 @@ public class CategoriaResource {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> find(@PathVariable Integer id){
-        Categoria categoria = categoriaService.buscarPorId(id);
+        Categoria categoria = categoriaService.buscaPorId(id);
         return ResponseEntity.ok().body(categoria);
     }
     @PostMapping

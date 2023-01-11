@@ -10,7 +10,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +23,7 @@ public class CategoriaService {
         List<Categoria> categorias = categoriaRepository.findAll();
         return categorias;
     }
-    public Categoria buscarPorId(Integer id){
+    public Categoria buscaPorId(Integer id){
 
         Optional<Categoria> optional = categoriaRepository.findById(id);
 
@@ -36,11 +35,12 @@ public class CategoriaService {
         return categoriaRepository.save(categoria);
     }
     public Categoria atualizar(Categoria categoria){
-        buscarPorId(categoria.getId());
-        return categoriaRepository.save(categoria);
+        Categoria categoriaAnt = buscaPorId(categoria.getId());
+        categoriaAnt.setNome(categoria.getNome());
+        return categoriaRepository.save(categoriaAnt);
     }
     public void excluir(Integer id){
-        buscarPorId(id);
+        buscaPorId(id);
         try {
             categoriaRepository.deleteById(id);
         }
